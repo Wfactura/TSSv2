@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Bombas</title>
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> 
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />-->
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> 
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+            }
+            .container-fluid{
+                margin: 0;
+                padding: 0;
+            }
+            .dropdown-item,.ui-link ui-widget dropdown-item{
+                color: orangered !important;
+                font-size: large !important;
+                font-weight: 900 !important;
+            }
+            .dropdown-item:hover,.ui-link ui-widget dropdown-item:hover{
+                background-color: #2C7EEE !important;
+                color: white !important;
+            }
+            div[class="dropdown-menu show"]{
+                background-color: rgba(255,255,255,0.6);
+            }
+            .ui-button, .ui-sortable-column, .ui-fieldset-legend, .ui-state-enable, .ui-state-disabled ,.ui-state-default{
+                border: 1px solid #0463E4 !important;
+                background: #2C7EEE !important;
+            }
+            .ui-state-hover{
+                background: #2C7EEE !important;
+            }
+            .ui-paginator-page{
+                color: black !important;
+            }
+            input[class*="ui-column-filter"]{
+                background: white !important;
+            }
+            .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{
+                color:white !important;
+            }
+            #dtFacturas{
+                font-size: 12px !important;
+            }
+            .ui-g div,.wf {
+                background-color: #ededed;
+                text-align: center;
+                border: 1px solid #fafafa;
+            }
+            th[role="columnheader"]{
+                color : white !important;
+               /* width: 200px !important;*/
+            }
+            td[role="gridcell"]{
+               /* width: 200px !important;  */
+            }
+            button{
+                color: white !important;
+                text-shadow: none !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <div class="row">                
+                <div class="col-md-3">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 200px; height: 55px">
+                            Menú
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <p:link class="dropdown-item" outcome="bombas">
+                                <img src="Aplicacion/imgA/bombshort.png" alt="" width="30"/>
+                                &ensp;Bombas</p:link> 
+                            <div class="dropdown-divider"></div>
+                            <p:link class="dropdown-item" outcome="usuarioM">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Usuario</p:link>
+                            <p:link class="dropdown-item" outcome="bombasC">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Bombas
+                            </p:link>
+                            <p:link class="dropdown-item" outcome="operador">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                
+                                &ensp;Operador
+                            </p:link>
+                            <p:link class="dropdown-item"  outcome="login">
+                                <img src="Aplicacion/imgA/close.png" alt="" width="30"/>                                
+                                &ensp;Cerrar sesión
+                            </p:link>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-6">
+                    <h:outputText value="&ensp;#{bombas.usuarioElegido.nombreUsuario}" style="font-size: 2em"/>
+                </div>
+                <div class="col-md-3">
+                    <div class="nav justify-content-end">
+                         <img src="Aplicacion/imgA/tss.jpg" alt="" width="150"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p:outputPanel>
+            <p:dataTable id="dtFacturas" value="#{bombas.listBomba}"  var="item"
+                         rowKey="#{item.bomba.idBomba}"
+                         paginator="true"
+                         rows="20"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" scrollable="true"  scrollHeight="150px" emptyMessage="No hay Elementos"
+                         styleClass="formato">
+                <p:column headerText="Bomba" style="width: 10% !important">
+                    <h:outputText class="fa fa-truck" title="Informacion bomba" style="font-size: 1em"/><h:outputText value="&ensp;  #{item.bomba.serie}" />
+                </p:column>
+                <p:column headerText="Usuario" style="width: 20% !important">
+                    <h:outputText class="fa fa-user"  value=" " title="Informacion usuario" style="font-size: 1em"/><h:outputText  value="&ensp; #{item.bomba.idOperador.nombreOperador}" />
+                </p:column>
+                <p:column headerText="Conteo" style="width: 10% !important">
+                    <h:outputText class="" value=" " title="Informacion usuario" style="font-size: 1em"/><h:outputText value="&ensp; #{item.bitacora.conteoFinal}" />
+                </p:column>
+                <p:column headerText="Fecha" style="width: 20% !important" >
+                    <h:outputText class="" value=" " title="Informacion usuario" style="font-size: 1em"/><h:outputText value="#{item.bitacora.fecha}" >
+                        <f:convertDateTime dateStyle="long" timeZone="EST" type="both"/> 
+                    </h:outputText>
+                </p:column >
+                <p:column headerText="Localización" style="width: 40% !important">
+                    <h:form>
+                        <p:commandButton action="#{bombas.irBombeo(item)}" value="Bombeo"  icon="fa fa-gears" title="Bombeo"/>
+                        <p:commandButton action="#{bombas.irUbicacion(item)}" value="Ubicación"  icon="fa fa-globe" title="Ubicación"/>
+                        <p:commandButton action="#{bombas.irRutas(item)}" value="Rutas"  icon="fa fa-map" title="Rutas"/>
+                    </h:form>
+                </p:column> 
+            </p:dataTable>
+        </p:outputPanel>
+
+    </h:body>
+</html>
+

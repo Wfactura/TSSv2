@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>C Operadores</title>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> 
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUor7PGMJQnvyr-y0lPOpSKY5XIv2LimI"></script>
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+            }
+            .container-fluid{
+                margin: 0;
+                padding: 0;
+            }
+            div[id*="superMapa"] {
+                width: 100% !important;
+                height: 600px !important;
+            }
+            .ui-paginator-page{
+                color: black !important;
+            }
+            .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{
+                color:white !important;
+            }
+            .ui-g div,.wf {
+                background-color: #ededed;
+                text-align: center;
+                border: 1px solid #fafafa;
+            }
+            th[class="ui-state-default"]{
+                border: 1px solid #0463E4 !important;
+                background: #2C7EEE !important;
+                color: white !important;
+                text-shadow: none !important;
+            }
+            div[class="dropdown-menu show"]{
+                background-color: rgba(255,255,255,0.6);
+            }
+            .dropdown-item,.ui-link ui-widget dropdown-item{
+                color: orangered !important;
+                font-size: large !important;
+                font-weight: 900 !important;
+            }
+            .dropdown-item:hover,.ui-link ui-widget dropdown-item:hover{
+                background-color: #2C7EEE !important;
+                color: white !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <div class="row">                
+                <div class="col-md-3">
+
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 200px; height: 55px">
+                            Menú
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <p:link class="dropdown-item" outcome="bombas">
+                                <img src="Aplicacion/imgA/bombshort.png" alt="" width="30"/>
+                                &ensp;Bombas</p:link>                          
+                            <div class="dropdown-divider"></div>
+                            <p:link class="dropdown-item" outcome="usuarioM">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Usuario</p:link>
+                            <p:link class="dropdown-item" outcome="bombasC">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Bombas
+                            </p:link>
+                            <p:link class="dropdown-item" outcome="operador">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                
+                                &ensp;Operador
+                            </p:link>
+                            <p:link class="dropdown-item"  outcome="login">
+                                <img src="Aplicacion/imgA/close.png" alt="" width="30"/>                                
+                                &ensp;Cerrar sesión
+                            </p:link>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <h:outputText value="&ensp;#{operador.usuarioElegido.nombreUsuario}" style="font-size: 2em"/>
+                </div>
+                <div class="col-md-3">
+                    <div class="nav justify-content-end">
+                        <img src="Aplicacion/imgA/tss.jpg" alt="" width="150"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:form id="tabla">
+            <p:growl>
+                <p:autoUpdate />
+            </p:growl>
+            <p:dataTable var="oper" value="#{operador.listOperador}" rowKey="#{oper.idOperador}"
+                         paginator="true"
+                         rows="20"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         scrollable="true"  scrollHeight="250px" emptyMessage="No hay Elementos"
+                         styleClass="formato" style="font-size: 13px !important;">
+                <f:facet name="header">
+                    <h:outputText value="Editar Operadores"/>
+                </f:facet>
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{oper.nombreOperador}" />
+                </p:column>
+                <p:column headerText="">
+                    <p:commandButton value="Editar">
+                        <p:ajax update=":modalEdit" listener="#{operador.modal(oper)}"  />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="modalEdit">
+            <p:dialog header="Editar" widgetVar="editarOp" modal="true" height="200" id="modal">
+                <div>
+                    <h:outputText value="Operador: &ensp;" style="font-weight: bold "/>
+                    <h:inputText value="#{operador.operadorS}">
+                        <f:ajax event="keyup" listener="#{operador.operadorSet()}" render="@this" />
+                    </h:inputText>
+                </div>
+                <div style="height:50px"></div>
+                <div>
+
+                    <h:commandButton value="Cancelar" style="margin: 10px">
+                        <f:ajax listener="#{operador.cerrarM()}"  />
+                    </h:commandButton>
+                    <h:commandButton value="Guardar" style="margin: 10px">
+                        <f:ajax listener="#{operador.updateOper()}" render=":tabla"/>
+                    </h:commandButton>
+                </div>
+            </p:dialog> 
+        </h:form>
+    </h:body>
+</html>
+

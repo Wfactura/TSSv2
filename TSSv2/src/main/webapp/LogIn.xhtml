@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <script src="webjars/jquery/3.3.1/jquery.min.js"></script>    
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <title>Inicio</title>
+        <style>
+            body{
+                background:rgb(255, 255, 255);
+                background-size: 100%;
+                background-image: url('Aplicacion/imgA/Ptss2.jpg');
+                background-repeat: no-repeat;
+            }
+
+            .ui-button, .ui-sortable-column, .ui-fieldset-legend, .ui-state-enable, .ui-state-disabled{
+                border: 1px solid #0463E4 !important;
+                background: #2C7EEE !important;
+            }
+            button{
+                color: white !important;
+                text-shadow: none !important;
+            }
+        </style>
+    </h:head>
+
+    <h:body >        
+        <h:form>
+
+            <div class="ui-g" >
+                <p:growl id="growl" showDetail="true" sticky="true" life="800">
+                    <p:autoUpdate />
+                </p:growl>
+                <h:outputText value="" 
+                              style=" width: 100%; 
+                              margin-top: 27%; 
+                              text-align: center; 
+                              font-size: 60px; 
+                              font-style: oblique; 
+                              color: darkgray;
+                              text-shadow: -1px 1px 0px rgb(51, 51, 51),
+                              -2px 2px 0px rgb(26, 26, 26),
+                              -3px 3px 0px rgb(13, 13, 13),
+                              -4px 4px 0px rgb(0, 0, 0),
+                              1px 0px 0px rgb(0, 0, 0)"/>
+
+                <h:panelGrid columns="2" cellpadding="5" id="datos" style="
+                             background: rgba(9, 14, 14,.6);
+                             margin-top: 2%; 
+                             width: 26%; 
+                             margin-left: 35%;
+                             margin-right: 34%; 
+                             box-shadow: -1px 1px 2px rgb(255, 255, 255),
+                             -2px 2px 1px rgb(255, 255, 255),
+                             -3px 3px 0px rgb(255, 255, 255),
+                             -4px 4px 0px rgb(255, 255, 255);
+                             border-radius: 10px ">
+                    <h:outputText style="color:white; font-size: 1.5em; margin-left: 25%" value="Usuario: "  />
+                    <p:inputText id="usua" value="#{login.usuario.nombreUsuario}" required="true" requiredMessage="El Usuario es requerido" />
+                    <h:outputText style="color:white; font-size: 1.5em; margin-left: 25%" value="Password: " />
+                    <p:password id="pass" value="#{login.usuario.passworUsuario}" required="true" requiredMessage="El Password es requerido" /> 
+                    <p:commandButton action="#{login.validarInicioSesion}" style="margin-right:20px; float: right" value="Ingresar"  icon="fa fa-sign-in"/>
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

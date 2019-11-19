@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Bobas</title>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <!--<script src="webjars/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> 
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+            }
+            .container-fluid{
+                margin: 0;
+                padding: 0;
+            }
+            .dropdown-item,.ui-link ui-widget dropdown-item{
+                color: orangered !important;
+                font-size: large !important;
+                font-weight: 900 !important;
+            }
+            .dropdown-item:hover,.ui-link ui-widget dropdown-item:hover{
+                background-color: #2C7EEE !important;
+                color: white !important;
+            }
+            div[class="dropdown-menu show"]{
+                background-color: rgba(255,255,255,0.6);
+            }
+            .ui-button, .ui-sortable-column, .ui-fieldset-legend, .ui-state-enable, .ui-state-disabled ,.ui-state-default{
+                border: 1px solid #0463E4 !important;
+                background: #2C7EEE !important;
+            }
+            .ui-state-hover{
+                background: #2C7EEE !important;
+            }
+            .ui-paginator-page{
+                color: black !important;
+            }
+            input[class*="ui-column-filter"]{
+                background: white !important;
+            }
+            .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{
+                color:white !important;
+            }
+            #dtFacturas{
+                font-size: 12px !important;
+            }
+            .ui-g div,.wf {
+                background-color: #ededed;
+                text-align: center;
+                border: 1px solid #fafafa;
+            }
+            th[role="columnheader"]{
+                color : white !important;
+                width: 200px !important;
+            }
+            td[role="gridcell"]{
+                width: 200px !important;  
+            }
+            button{
+                color: white !important;
+                text-shadow: none !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <div class="row">                
+                <div class="col-md-3">
+
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 200px; height: 55px">
+                            Menú
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <p:link class="dropdown-item" outcome="bombas">
+                                <img src="Aplicacion/imgA/bombshort.png" alt="" width="30"/>
+                                &ensp;Bombas</p:link>                           
+                            <div class="dropdown-divider"></div>
+                            <p:link class="dropdown-item" outcome="usuarioM">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Usuario</p:link>
+                            <p:link class="dropdown-item" outcome="bombasC">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Bombas
+                            </p:link>
+                            <p:link class="dropdown-item" outcome="operador">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                
+                                &ensp;Operador
+                            </p:link>
+                            <p:link class="dropdown-item"  outcome="login">
+                                <img src="Aplicacion/imgA/close.png" alt="" width="30"/>                                
+                                &ensp;Cerrar sesión
+                            </p:link>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <h:outputText value="&ensp;#{bombasC.usuarioElegido.nombreUsuario}" style="font-size: 2em"/>
+                </div>
+                <div class="col-md-3">
+                    <div class="nav justify-content-end">
+                        <img src="Aplicacion/imgA/tss.jpg" alt="" width="150"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:form id="tabla">
+            <p:growl>
+                <p:autoUpdate />
+            </p:growl>
+            <p:dataTable var="bomba" value="#{bombasC.listaBombas}" rowKey="#{bomba.idBomba}"
+                         paginator="true"
+                         rows="20"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                         scrollable="true"  scrollHeight="250px" emptyMessage="No hay Elementos"
+                         styleClass="formato" style="font-size: 13px !important;">
+                <f:facet name="header">
+                    <h:outputText value="Editar Bombas"/>
+                </f:facet>
+                <p:column headerText="Modelo">
+                    <h:outputText value="#{bomba.modelo}" />
+                </p:column>
+                <p:column headerText="Serie">
+                    <h:outputText value="#{bomba.serie}" />
+                </p:column>
+                <p:column headerText="Placa">
+                    <h:outputText value="#{bomba.numeco}" />
+                </p:column>
+                <p:column headerText="Editar" style="text-align: center; width: 15%; " >
+                    <p:commandButton value="Editar"  icon="fa fa-pencil">
+                        <p:ajax update=":modalEdit" listener="#{bombasC.modal(bomba)}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="modalEdit">
+            <p:dialog header="Editar" widgetVar="editarBom" modal="true" height="200" id="modal">
+                <div>
+                    <h:outputText value="Modelo: &ensp;" style="font-weight: bold "/>
+                    <h:inputText value="#{bombasC.bombaEdit.modelo}" />
+                </div>
+                <div>
+                    <h:outputText value="&ensp;Serie: &ensp;&ensp;&ensp;" style="font-weight: bold "/>
+                    <h:inputText value="#{bombasC.bombaEdit.serie}" />
+                </div>
+                <div>
+                    <h:outputText value="Placa: &ensp;" style="font-weight: bold "/>
+                    <h:inputText value="#{bombasC.bombaEdit.numeco}" required="true" requiredMessage="El Password es requerido"/>
+                </div>
+                <div style="height:50px"></div>
+                <div>
+                    <p:commandButton actionListener="#{bombasC.cerrarM()}" value="Cancelar"  icon="fa fa-close"/> 
+                    <p:commandButton actionListener="#{bombasC.updateBomba()}" update=":tabla" id="map"  value="Guardar"  icon="fa fa-pencil"/> 
+                </div>
+            </p:dialog> 
+        </h:form>
+    </h:body>
+</html>
+

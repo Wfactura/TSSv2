@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Rutas</title>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+        <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> 
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUor7PGMJQnvyr-y0lPOpSKY5XIv2LimI"></script>
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <style>
+           body{
+                margin: 0;
+                padding: 0;
+            }
+            .container-fluid{
+                margin: 0;
+                padding: 0;
+            }
+            div[id*="superMapa"] {
+                width: 100% !important;
+                height:85% !important;
+                position:absolute !important; 
+                z-index:1 !important;
+            }
+            .ui-paginator-page{
+                color: black !important;
+            }
+            .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{
+                color:white !important;
+            }
+            .ui-g div,.wf {
+                background-color: #ededed;
+                text-align: center;
+                border: 1px solid #fafafa;
+            }
+            th[class="ui-state-default"]{
+                border: 1px solid #0463E4 !important;
+                background: #2C7EEE !important;
+                color: white !important;
+                text-shadow: none !important;
+            }
+            div[class="dropdown-menu show"]{
+                background-color: rgba(255,255,255,0.6);
+            }
+            .dropdown-item,.ui-link ui-widget dropdown-item{
+                color: orangered !important;
+                font-size: large !important;
+                font-weight: 900 !important;
+            }
+            .dropdown-item:hover,.ui-link ui-widget dropdown-item:hover{
+                background-color: #2C7EEE !important;
+                color: white !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <div class="row">                
+                <div class="col-md-3">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 200px; height: 55px">
+                            Menú
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <p:link class="dropdown-item" outcome="bombas">
+                                <img src="Aplicacion/imgA/bombshort.png" alt="" width="30"/>
+                                &ensp;Bombas</p:link> 
+                            <div class="dropdown-divider"></div>
+                            <p:link class="dropdown-item" outcome="usuarioM">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Usuario</p:link>
+                            <p:link class="dropdown-item" outcome="bombasC">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+                                &ensp;Bombas
+                            </p:link>
+                            <p:link class="dropdown-item" outcome="operador">
+                                <img src="Aplicacion/imgA/config.png" alt="" width="30"/>
+
+                                &ensp;Operador
+                            </p:link>
+                            <p:link class="dropdown-item"  outcome="login">
+                                <img src="Aplicacion/imgA/close.png" alt="" width="30"/>                                
+                                &ensp;Cerrar sesión
+                            </p:link>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <h:outputText value="&ensp;#{rutas.usuarioElegido.nombreUsuario}" style="font-size: 2em"/>
+                </div>
+                <div class="col-md-3">
+                    <div class="nav justify-content-end">
+                        <img src="Aplicacion/imgA/tss.jpg" alt="" width="150"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="font-size: 13px !important;">
+            <h:form id="formDatos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="nav justify-content-center">
+                            Busqueda por fecha
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-2">
+                        <p:outputLabel for="inicio" value="Inicio:" />
+                    </div>
+                    <div class="col-md-2">
+                        <p:outputLabel for="fin" value="Fin:" />
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                        <p:datePicker id="inicio" value="#{rutas.inicio}" />
+
+                    </div>
+                    <div class="col-md-2">
+                        <p:datePicker id="fin" value="#{rutas.fin}"/>
+                    </div>
+                    <div class="col-md-3">
+                        <p:commandButton actionListener="#{rutas.rutasM()}" 
+                                         ajax="true" value="Buscar"  icon="fa fa-search"
+                                         update=":formDatos :formMapa"/>
+                        <p:commandButton actionListener="#{rutas.irGlobal()}"  ajax="true" value="Regresar" icon="fa fa-reply" style="margin-left: 10px" />
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+            </h:form>
+        </div>
+
+        <h:form id="formMapa">
+            <div class="ui-g-8" style="width: 100% !important">
+                <p:gmap id="superMapa" center="#{rutas.center}" zoom="13" type="ROADMAP" model="#{rutas.simpleModel}" /> 
+            </div>
+        </h:form>
+    </h:body>
+</html>
+
