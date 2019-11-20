@@ -130,12 +130,12 @@ public class rutas implements Serializable {
             List<LatLng> lineas = new ArrayList<LatLng>();
             String fi = formatter.format(inicio);
             String ff = formatter.format(fin);
-            fi=fi+" 00:00:00";
-            ff=ff+" 23:59:59";
+            fi = fi + " 00:00:00";
+            ff = ff + " 23:59:59";
             System.out.println("----- " + fi + " " + ff);
 
             List<Localizacion> localList = localizacionDao.buscarUsuBomList(usuarioElegido.getIdUsuario(), bombaL.getBomba().getIdBomba(), fi, ff);
-            if (localList != null && localList.size()>0) {
+            if (localList != null && localList.size() > 0) {
                 int i = 0;
                 for (Localizacion l : localList) {
                     System.out.println(Double.parseDouble(l.getLatitud()) + " , " + Double.parseDouble(l.getLongitud()));
@@ -163,18 +163,21 @@ public class rutas implements Serializable {
                     polyline.setStrokeOpacity(0.7);
                     simpleModel.addOverlay(polyline);
                 }
-            }else{
-                Localizacion l=localizacionDao.buscarUsuBomUbic(usuarioElegido.getIdUsuario(), bombaL.getBomba().getIdBomba());
-                LatLng coord1 = new LatLng(Double.parseDouble(l.getLatitud()), Double.parseDouble(l.getLongitud()));
-                simpleModel.addOverlay(new Marker(coord1, "Actual "+ l.getFecha(), null, "Aplicacion/imgA/marcaMapa.png"));
-                center = l.getLatitud() + "," + l.getLongitud();
+            } else {
+                Localizacion l = localizacionDao.buscarUsuBomUbic(usuarioElegido.getIdUsuario(), bombaL.getBomba().getIdBomba());
+                if (l != null) {
+                    LatLng coord1 = new LatLng(Double.parseDouble(l.getLatitud()), Double.parseDouble(l.getLongitud()));
+                    simpleModel.addOverlay(new Marker(coord1, "Actual " + l.getFecha(), null, "Aplicacion/imgA/marcaMapa.png"));
+                    center = l.getLatitud() + "," + l.getLongitud();
+                }
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    
+
     public void irGlobal() {
         try {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioElegido", usuarioElegido);

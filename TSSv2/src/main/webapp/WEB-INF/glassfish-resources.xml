@@ -6,7 +6,7 @@
         <property name="portNumber" value="1433"/>
         <property name="databaseName" value="geolocalizacion"/>
         <property name="User" value="sa"/>
-        <property name="Password" value="12345678"/>
+        <property name="Password" value="Mk12345678"/>
         <property name="URL" value="jdbc:jtds:sqlserver://localhost:1433/geolocalizacion"/>
         <property name="driverClass" value="net.sourceforge.jtds.jdbc.Driver"/>
     </jdbc-connection-pool>

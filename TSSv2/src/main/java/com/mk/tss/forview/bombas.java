@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "bombas")
 @ViewScoped
 public class bombas implements Serializable {
+     private static final long serialVersionUID=1L;
 
     @EJB
     private BitacoraFacadeLocal bitacoraService;
