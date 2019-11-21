@@ -41,9 +41,8 @@ public class Localizacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_localizacion")
+    @Column(name = "id_localizacion", nullable = false)
     private Integer idLocalizacion;
     @Basic(optional = false)
     @NotNull

@@ -15,6 +15,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUor7PGMJQnvyr-y0lPOpSKY5XIv2LimI"></script>
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+        <script>setTimeout('document.location.reload()',20000); </script>
         <style>
             body{
                 margin: 0;
@@ -134,7 +135,6 @@
                             <h:commandButton id="btnLoadData" value="Refrescar" action="#{ubicacion.ubicacion()}">
                                 <f:ajax execute="@form" render=":formMapa" />
                             </h:commandButton>
-                            <p:poll interval="20" listener="#{ubicacion.ubicacion()}" update=":formMapa"/>
                         </h:form>
 
                     </div>

@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.map.DefaultMapModel;
@@ -33,7 +34,7 @@ import org.primefaces.model.map.Marker;
 import org.primefaces.model.map.Polyline;
 
 @ManagedBean(name = "rutas")
-@ViewScoped
+@RequestScoped
 public class rutas implements Serializable {
 
     private static final long serialVersionUID = 1L;

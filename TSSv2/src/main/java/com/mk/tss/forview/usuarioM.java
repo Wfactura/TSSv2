@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -20,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author WF Consulting
  */
 @ManagedBean(name = "usuarioM")
-@ViewScoped
+@RequestScoped
 public class usuarioM implements Serializable {
 
     private static final long serialVersionUID = 1L;
