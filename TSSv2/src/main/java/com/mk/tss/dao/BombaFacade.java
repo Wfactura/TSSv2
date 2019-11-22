@@ -57,17 +57,16 @@ public class BombaFacade extends AbstractFacade<Bomba> implements BombaFacadeLoc
     }
 
     @Override
-    public Bomba buscarBomba(String bomba, Operador op) {
+    public Bomba buscarBomba(Integer bomba, Operador op) {
         List<Bomba> l = null;
         Bomba bom = null;
         try {
-            String queryString = "from Bomba b where b.serie=:serie and b.idOperador=:op";
+            String queryString = "from Bomba b where b.idBomba=:idBomba and b.idOperador=:op";
             Query query = em.createQuery(queryString);
-            query.setParameter("serie", bomba);
+            query.setParameter("idBomba", bomba);
             query.setParameter("op", op);
             l = query.getResultList();
             if (l.size() > 0) {
-                System.out.println("total de bombas "+ l.size());
                 bom = l.get(0);
             }
         } catch (Exception e) {

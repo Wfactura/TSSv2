@@ -46,9 +46,6 @@ public class DatosGPS extends HttpServlet {
             String datos = request.getParameter("g");
             String[] gps = datos.split(";");
             System.out.println(datos);
-            for(int i=0;i<gps.length;i++){
-                System.out.println(gps[i]);
-            }
             if (gps.length > 0) {
                 try {
                     Localizacion l = new Localizacion();

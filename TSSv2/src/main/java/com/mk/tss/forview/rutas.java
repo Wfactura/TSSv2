@@ -133,13 +133,10 @@ public class rutas implements Serializable {
             String ff = formatter.format(fin);
             fi = fi + " 00:00:00";
             ff = ff + " 23:59:59";
-            System.out.println("----- " + fi + " " + ff);
-
             List<Localizacion> localList = localizacionDao.buscarUsuBomList(usuarioElegido.getIdUsuario(), bombaL.getBomba().getIdBomba(), fi, ff);
             if (localList != null && localList.size() > 0) {
                 int i = 0;
                 for (Localizacion l : localList) {
-                    System.out.println(Double.parseDouble(l.getLatitud()) + " , " + Double.parseDouble(l.getLongitud()));
                     LatLng coord1 = new LatLng(Double.parseDouble(l.getLatitud()), Double.parseDouble(l.getLongitud()));
                     //simpleModel.addOverlay(new Marker(coord1, "" + (i + 1), "https://maps.google.com/mapfiles/ms/micons/pink-dot.png"));
 
@@ -154,8 +151,6 @@ public class rutas implements Serializable {
                 }
                 Polyline polyline = new Polyline();
                 if (lineas.size() > 0) {
-                    System.out.println("entro al for "
-                            + "");
                     for (LatLng t : lineas) {
                         polyline.getPaths().add(t);
                     }

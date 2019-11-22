@@ -33,7 +33,7 @@ public interface BombaFacadeLocal {
 
     public abstract int count();
 
-    public Bomba buscarBomba(String bomba, Operador op);
+    public Bomba buscarBomba(Integer bomba, Operador op);
 
     public boolean updateOper(Bomba bom);
     

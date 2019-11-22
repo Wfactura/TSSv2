@@ -54,7 +54,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     
     @Override
     public Usuario buscarConteo(Integer c) {
-        System.out.println("buscando usuario ."+c+".");
+        System.out.println("DatosRemoto buscando usuario "+c+"");
         Usuario dato = null;
         try {
             String queryString = "from Usuario u where u.idUsuario=:idUsu";

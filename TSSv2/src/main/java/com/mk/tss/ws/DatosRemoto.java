@@ -58,7 +58,7 @@ public class DatosRemoto extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             //request.getContextPath() d=1|2|1231.123|2121.121|1|3|2132123/21232/121|321/4554/512||2121|
 //68|1|19.293062|-99.656952|0|0|2019-7-25T15:46:4|2019-7-25T:15:47:28|1|12
-            System.out.println("recibiendo datos ..........");
+            System.out.println("DatosRemoto recibiendo datos ..........");
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             String usuario = request.getParameter("usu");
             String bomba = request.getParameter("bom");
@@ -70,20 +70,20 @@ public class DatosRemoto extends HttpServlet {
             String fechafin = request.getParameter("ffi");
             String numcont = request.getParameter("nen");
             if ((bomba != null && !bomba.equals("")) && (usuario != null && !usuario.equals("")) && (contadorI != null && !contadorI.equals("")) && (contadorF != null && !contadorF.equals("")) && (latitud != null && !latitud.equals("")) && (longitud != null && !longitud.equals("")) && (fechaini != null && !fechaini.equals("")) && (fechafin != null && !fechafin.equals("")) && (numcont != null && !numcont.equals(""))) {
-                System.out.println("datos recibidos");
                 try {
                     Integer us = Integer.parseInt(usuario.trim());
                     Integer numenv = Integer.parseInt(numcont);
+                    Integer bom= Integer.parseInt(bomba);
                     Usuario user = usuarioFacadeLocal.buscarConteo(us);
-                    List<Operador> ope= operadorFacadeLocal.buscarUsuario(user);
+                    List<Operador> ope = operadorFacadeLocal.buscarUsuario(user);
                     Bomba bombaB = new Bomba();
-                    for(Operador op:ope){
-                       bombaB = bombaFacadeLocal.buscarBomba(bomba, op); 
-                       if(bombaB!=null){
-                           break;
-                       }
+                    for (Operador op : ope) {
+                        bombaB = bombaFacadeLocal.buscarBomba(bom, op);
+                        if (bombaB != null) {
+                            break;
+                        }
                     }
-                    
+
                     if (bombaB != null) {
                         if (bitacoraFacadeLocal.buscarNumEnv(bombaB, numenv)) {
                             try {
@@ -91,7 +91,6 @@ public class DatosRemoto extends HttpServlet {
                                 Integer contadorIn = Integer.parseInt(contadorI);
                                 Integer contadorFi = Integer.parseInt(contadorF);
                                 String ubicacion = latitud + "," + longitud;
-                                System.out.println("Ubicacion de la bomba "+ ubicacion);
                                 Bitacora bitacora = new Bitacora();
                                 bitacora.setIdBomba(bombaB);
                                 bitacora.setFecha(new Date());
@@ -102,65 +101,25 @@ public class DatosRemoto extends HttpServlet {
                                 bitacora.setFechaf(dateFormat.parse(fechafin));
                                 bitacora.setNumenvio(numenv);
                                 bitacoraFacadeLocal.insertar(bitacora);
-
-                                out.println("<!DOCTYPE html>");
-                                out.println("<html>");
-                                out.println("<head>");
-                                out.println("<title>Correctos</title>");
-                                out.println("</head>");
-                                out.println("<body>");
                                 out.println("<h1>ok</h1>");
-                                out.println("</body>");
-                                out.println("</html>");
                             } catch (Exception ex) {
-
-                                out.println("<!DOCTYPE html>");
-                                out.println("<html>");
-                                out.println("<head>");
-                                out.println("<title>Fallo</title>");
-                                out.println("</head>");
-                                out.println("<body>");
                                 out.println("<h1>fail</h1>");
-                                out.println("</body>");
-                                out.println("</html>");
                                 ex.printStackTrace();
                             }
                         } else {
-                            out.println("<!DOCTYPE html>");
-                            out.println("<html>");
-                            out.println("<head>");
-                            out.println("<title>Correctos</title>");
-                            out.println("</head>");
-                            out.println("<body>");
                             out.println("<h1>ok</h1>");
-                            out.println("</body>");
-                            out.println("</html>");
                         }
-                    }else{
+                    } else {
+
+                        out.println("<h1>fail</h1>");
                         System.out.println("no existe en la base de datos");
                     }
                 } catch (Exception e) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>BD Fallo</title>");
-                    out.println("</head>");
-                    out.println("<body>");
                     out.println("<h1>fail</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
                     e.printStackTrace();
                 }
             } else {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Sin datos</title>");
-                out.println("</head>");
-                out.println("<body>");
                 out.println("<h1>fail</h1>");
-                out.println("</body>");
-                out.println("</html>");
             }
 
         }
